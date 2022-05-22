@@ -1,18 +1,23 @@
 local Translations = {
     error = {
-        no_vehicles = "Vous n'avez aucun véhicule dans ce garage!",
+        no_vehicles = "Vous n'avez aucun véhicule dans ce garage!",              
         not_impound = "Votre véhicule n'est pas à la fourrière",
         not_owned = "Le véhicule ne vous appartient pas",
         not_correct_type = "Vous ne pouvez pas stocker ce type de véhicule ici.",
         not_enough = "Pas assez d'argent",
         no_garage = "Aucun",
-        vehicle_occupied = "Vous ne pouvez pas stocker ce véhicule car il n'est pas vide",
+        too_far_away = "Too far away from a parking lot", --TODO
+        occupied = "Parking lot is already occupied", --TODO
+        all_occupied = "All parkingspots are occupied", -- TODO
+        no_vehicle = "There is no vehicle to park", -- TODO
+        no_house_keys = "You don't have the keys for this house garage", --TODO
     },
     success = {
         vehicle_parked = "Véhicule garé !",
     },
     menu = {
         header = {
+            house_garage = "Garage Personnel",
             house_car = "Garage de propriété %{value}",
             public_car = "Garage Public %{value}",
             public_sea = "Hangar à bateaux Public %{value}",
@@ -46,13 +51,6 @@ local Translations = {
         garaged = "Garé",
         impound = "En Fourrière par la Police",
     },
-    info = {
-        car_e = "~g~E~w~ - Garage",
-        sea_e = "~g~E~w~ - Hangarà bateaux",
-        air_e = "~g~E~w~ - Hangar",
-        park_e = "~g~E~w~ - Ranger le véhicule",
-        house_garage = "Garage Personnel",
-    }
 }
 
 Lang = Locale:new({
