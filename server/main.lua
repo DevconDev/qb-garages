@@ -163,6 +163,53 @@ end)
 
 RegisterNetEvent('qb-garage:server:updateVehicleState', function(state, plate, garage)
     MySQL.Async.execute('UPDATE player_vehicles SET state = ?, garage = ?, depotprice = ? WHERE plate = ?',{state, garage, 0, plate})
+QBCore.Functions.CreateCallback("qb-garage:server:IsSpawnOk", function(_, cb, plate, type)
+    if type == "depot" then         --If depot, check if vehicle is not already spawned on the map
+        if OutsideVehicles[plate] then
+            cb(false)
+        else
+            cb(true)
+        end
+    else
+        cb(true)
+    end
+end)
+
+RegisterNetEvent('qb-garage:server:updateVehicle', function(state, fuel, engine, body, plate, garage, type, gang)
+    QBCore.Functions.TriggerCallback('qb-garage:server:checkOwnership', source, function(owned)     --Check ownership
+        if owned then
+            if state == 0 or state == 1 or state == 2 then                                          --Check state value
+                if type ~= "house" then
+                    if Garages[garage] then                                                             --Check if garage is existing
+                        MySQL.update('UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ? WHERE plate = ?', {state, garage, fuel, engine, body, plate})
+                    end
+                else
+                    MySQL.update('UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ? WHERE plate = ?', {state, garage, fuel, engine, body, plate})
+                end
+            end
+        else
+            TriggerClientEvent('QBCore:Notify', source, Lang:t("error.not_owned"), 'error')
+        end
+    end, plate, type, garage, gang)
+end)
+
+RegisterNetEvent('qb-garage:server:updateVehicleState', function(state, plate, garage)
+    local type
+    if Garages[garage] then
+        type = Garages[garage].type
+    else
+        type = "house"
+    end
+
+    QBCore.Functions.TriggerCallback('qb-garage:server:validateGarageVehicle', source, function(owned)     --Check ownership
+        if owned then
+            if state == 0 then                                          --Check state value
+                MySQL.update('UPDATE player_vehicles SET state = ?, depotprice = ? WHERE plate = ?', {state, 0, plate})
+            end
+        else
+            TriggerClientEvent('QBCore:Notify', source, Lang:t("error.not_owned"), 'error')
+        end
+    end, garage, type, plate)
 end)
 
 RegisterNetEvent('qb-garages:server:UpdateOutsideVehicles', function(Vehicles)
