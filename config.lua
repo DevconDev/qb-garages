@@ -3,17 +3,6 @@ SharedGarages = false   --True == Gang and job garages are shared, false == Gang
 VisuallyDamageCars = true --True == Visually damage cars that go out of the garage depending of body damage, false == Do not visually damage cars (damage is still applied to car values)
 
 Garages = {
-    ["altagarage"] = {
-        label = "Alta Parking",
-        takeVehicle = vector3(-304.85, -988.47, 31.08),
-        spawnPoint = vector4(-308.04, -986.55, 30.65, 339.46),
-        putVehicle = vector3(-297.79, -991.06, 31.08),
-        showBlip = true,
-        blipName = "Public Parking",
-        blipNumber = 357,
-        type = 'public',                --public, job, gang, depot
-        vehicle = 'car'                 --car, air, sea
-    },
     ["motelgarage"] = {
         label = "Motel Parking",
         takeVehicle = vector3(273.43, -343.99, 44.91),
@@ -162,17 +151,6 @@ Garages = {
         takeVehicle = vector3(215.9499, -809.698, 30.731),
         spawnPoint = vector4(234.1942, -787.066, 30.193, 159.6),
         putVehicle = vector3(218.0894, -781.370, 30.389),
-        showBlip = true,
-        blipName = "Public Parking",
-        blipNumber = 357,
-        type = 'public',                --public, job, gang, depot
-        vehicle = 'car'                 --car, air, sea
-    },
-    ["zonahgarage"] = {
-        label = "Mount Zonah Garage Parking",
-        takeVehicle = vector3(-428.92, -350.28, 24.23),
-        spawnPoint = vector4(-436.35, -356.84, 23.8, 108.39),
-        putVehicle = vector3(-435.88, -350.36, 23.8),
         showBlip = true,
         blipName = "Public Parking",
         blipNumber = 357,
@@ -345,28 +323,6 @@ Garages = {
         blipNumber = 356,
         type = 'depot',                --public, job, gang, depot
         vehicle = 'sea'                 --car, air, sea
-    },
-    ["devconparking"] = {
-        label = "Devcon Estate Parking",
-        takeVehicle = vector3(-1530.88, 84.29, 56.47),
-        spawnPoint = vector4(-1530.88, 84.29, 56.47, 316.46),
-        putVehicle = vector3(-1525.66, 82.17, 56.56),
-        showBlip = false,
-        blipName = "Public Parking",
-        blipNumber = 357,
-        type = 'public',                --public, job, gang, depot
-        vehicle = 'car'                 --car, air, sea
-    },
-    ["devconair"] = {
-        label = "Devcon Landing Pad",
-        takeVehicle = vector3(-1600.4, 103.13, 61.03),
-        spawnPoint = vector4(-1610.09, 106.12, 62.9, 10.2),
-        putVehicle = vector3(-1613.23, 107.14, 61.38),
-        showBlip = false,
-        blipName = "Hangar",
-        blipNumber = 360,
-        type = 'public',                --public, job, gang, depot
-        vehicle = 'air'                 --car, air, sea
     },
 }
 HouseGarages = {}
