@@ -19,11 +19,11 @@ local function MenuGarage(type, garage, indexgarage)
     local header
     local leave
     if type == "house" then
-        header = Lang:t("menu.header."..type.."_car", {value = garage.label})
+        header = Lang:t("menu.header." .. type .. "_car", { value = garage.label })
         leave = Lang:t("menu.leave.car")
     else
-        header = Lang:t("menu.header."..type.."_"..garage.vehicle, {value = garage.label})
-        leave = Lang:t("menu.leave."..garage.vehicle)
+        header = Lang:t("menu.header." .. type .. "_" .. garage.vehicle, { value = garage.label })
+        leave = Lang:t("menu.leave." .. garage.vehicle)
     end
 
     exports['qb-menu']:openMenu({
@@ -54,7 +54,7 @@ local function MenuGarage(type, garage, indexgarage)
 end
 
 local function ClearMenu()
-	TriggerEvent("qb-menu:closeMenu")
+    TriggerEvent("qb-menu:closeMenu")
 end
 
 local function closeMenuFull()
@@ -62,9 +62,9 @@ local function closeMenuFull()
 end
 
 local function DestroyZone(type, index)
-    if garageZones[type.."_"..index] then
-        garageZones[type.."_"..index].zonecombo:destroy()
-        garageZones[type.."_"..index].zone:destroy()
+    if garageZones[type .. "_" .. index] then
+        garageZones[type .. "_" .. index].zonecombo:destroy()
+        garageZones[type .. "_" .. index].zone:destroy()
     end
 end
 
@@ -106,25 +106,26 @@ local function CreateZone(type, garage, index)
         minz = coords.z - 1.0
         maxz = coords.z + 2.0
     end
-    garageZones[type.."_"..index] = {}
-    garageZones[type.."_"..index].zone = BoxZone:Create(
+    garageZones[type .. "_" .. index] = {}
+    garageZones[type .. "_" .. index].zone = BoxZone:Create(
         coords, size, size, {
-            minZ = minz,
-            maxZ = maxz,
-            name = type,
-            debugPoly = false,
-            heading = heading
-        })
+        minZ = minz,
+        maxZ = maxz,
+        name = type,
+        debugPoly = false,
+        heading = heading
+    })
 
-    garageZones[type.."_"..index].zonecombo = ComboZone:Create({garageZones[type.."_"..index].zone}, {name = "box"..type, debugPoly = false})
-    garageZones[type.."_"..index].zonecombo:onPlayerInOut(function(isPointInside)
+    garageZones[type .. "_" .. index].zonecombo = ComboZone:Create({ garageZones[type .. "_" .. index].zone },
+        { name = "box" .. type, debugPoly = false })
+    garageZones[type .. "_" .. index].zonecombo:onPlayerInOut(function(isPointInside)
         if isPointInside then
             local text
             if type == "in" then
                 if garage.type == "house" then
                     text = Lang:t("info.park_e")
                 else
-                    text = Lang:t("info.park_e").."<br>"..garage.label
+                    text = Lang:t("info.park_e") .. "<br>" .. garage.label
                 end
                 exports['qb-core']:DrawText(text, 'left')
                 InputIn = true
@@ -132,7 +133,7 @@ local function CreateZone(type, garage, index)
                 if garage.type == "house" then
                     text = Lang:t("info.car_e")
                 else
-                    text = Lang:t("info."..garage.vehicle.."_e").."<br>"..garage.label
+                    text = Lang:t("info." .. garage.vehicle .. "_e") .. "<br>" .. garage.label
                 end
 
                 exports['qb-core']:DrawText(text, 'left')
@@ -195,8 +196,8 @@ local function CreateZone(type, garage, index)
 end
 
 local function doCarDamage(currentVehicle, veh)
-	local engine = veh.engine + 0.0
-	local body = veh.body + 0.0
+    local engine = veh.engine + 0.0
+    local body = veh.body + 0.0
 
     Wait(100)
     if VisuallyDamageCars then
@@ -264,11 +265,11 @@ RegisterNetEvent("qb-garages:client:VehicleList", function(data)
     local header
     local leave
     if type == "house" then
-        header = Lang:t("menu.header."..type.."_car", {value = garage.label})
+        header = Lang:t("menu.header." .. type .. "_car", { value = garage.label })
         leave = Lang:t("menu.leave.car")
     else
-        header = Lang:t("menu.header."..type.."_"..garage.vehicle, {value = garage.label})
-        leave = Lang:t("menu.leave."..garage.vehicle)
+        header = Lang:t("menu.header." .. type .. "_" .. garage.vehicle, { value = garage.label })
+        leave = Lang:t("menu.leave." .. garage.vehicle)
     end
 
     QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result)
@@ -295,9 +296,9 @@ RegisterNetEvent("qb-garages:client:VehicleList", function(data)
                     v.state = Lang:t("status.impound")
                 end
                 if type == "depot" then
-                    MenuGarageOptions[#MenuGarageOptions+1] = {
-                        header = Lang:t('menu.header.depot', {value = vname, value2 = v.depotprice}),
-                        txt = Lang:t('menu.text.depot', {value = v.plate, value2 = currentFuel, value3 = enginePercent, value4 = bodyPercent}),
+                    MenuGarageOptions[#MenuGarageOptions + 1] = {
+                        header = Lang:t('menu.header.depot', { value = vname, value2 = v.depotprice }),
+                        txt = Lang:t('menu.text.depot', { value = v.plate, value2 = currentFuel, value3 = enginePercent, value4 = bodyPercent }),
                         params = {
                             event = "qb-garages:client:TakeOutDepot",
                             args = {
@@ -309,9 +310,9 @@ RegisterNetEvent("qb-garages:client:VehicleList", function(data)
                         }
                     }
                 else
-                    MenuGarageOptions[#MenuGarageOptions+1] = {
-                        header = Lang:t('menu.header.garage', {value = vname, value2 = v.plate}),
-                        txt = Lang:t('menu.text.garage', {value = v.state, value2 = currentFuel, value3 = enginePercent, value4 = bodyPercent}),
+                    MenuGarageOptions[#MenuGarageOptions + 1] = {
+                        header = Lang:t('menu.header.garage', { value = vname, value2 = v.plate }),
+                        txt = Lang:t('menu.text.garage', { value = v.state, value2 = currentFuel, value3 = enginePercent, value4 = bodyPercent }),
                         params = {
                             event = "qb-garages:client:takeOutGarage",
                             args = {
@@ -325,7 +326,7 @@ RegisterNetEvent("qb-garages:client:VehicleList", function(data)
                 end
             end
 
-            MenuGarageOptions[#MenuGarageOptions+1] = {
+            MenuGarageOptions[#MenuGarageOptions + 1] = {
                 header = leave,
                 txt = "",
                 params = {
@@ -353,33 +354,24 @@ RegisterNetEvent('qb-garages:client:takeOutGarage', function(data)
                 location = garage.spawnPoint
                 heading = garage.spawnPoint.w
             end
-        
-            QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-                QBCore.Functions.TriggerCallback('qb-garage:server:GetVehicleProperties', function(properties)
-                    if vehicle.plate then
-                        SetNetworkIdAlwaysExistsForPlayer(NetworkGetNetworkIdFromEntity(veh), PlayerPedId(), true)
-                        TriggerServerEvent('qb-garages:server:UpdateOutsideVehicle', vehicle.plate, NetworkGetNetworkIdFromEntity(veh))
-                    end
-        
-                    QBCore.Functions.SetVehicleProperties(veh, properties)
-                    SetVehicleNumberPlateText(veh, vehicle.plate)
-                    SetEntityHeading(veh, heading)
-                    exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
-                    doCarDamage(veh, vehicle)
-                    SetEntityAsMissionEntity(veh, true, true)
-                    TriggerServerEvent('qb-garage:server:updateVehicleState', 0, vehicle.plate, index)
-                    closeMenuFull()
-                    TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-                    TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-                    SetVehicleEngineOn(veh, true, true)
-                    if type == "house" then
-                        exports['qb-core']:DrawText(Lang:t("info.park_e"), 'left')
-                        InputOut = false
-                        InputIn = true
-                    end
-                end, vehicle.plate)
-        
-            end, location, true)
+
+            QBCore.Functions.TriggerCallback('qb-garage:server:spawnvehicle', function(netId, properties)
+                local veh = NetToVeh(netId)
+                QBCore.Functions.SetVehicleProperties(veh, properties)
+                SetVehicleNumberPlateText(veh, vehicle.plate)
+                SetEntityHeading(veh, heading)
+                exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
+                doCarDamage(veh, vehicle)
+                TriggerServerEvent('qb-garage:server:updateVehicleState', 0, vehicle.plate, index)
+                closeMenuFull()
+                TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
+                SetVehicleEngineOn(veh, true, true)
+                if type == "house" then
+                    exports['qb-core']:DrawText(Lang:t("info.park_e"), 'left')
+                    InputOut = false
+                    InputIn = true
+                end
+            end, vehicle, location, true)
         else
             QBCore.Functions.Notify(Lang:t("error.not_impound"), "error", 5000)
         end
@@ -401,7 +393,7 @@ local function enterVehicle(veh, indexgarage, type, garage)
                     InputOut = true
                     InputIn = false
                 end
-    
+
                 if plate then
                     TriggerServerEvent('qb-garages:server:UpdateOutsideVehicle', plate, nil)
                 end
@@ -424,9 +416,9 @@ local function CreateBlipsZones()
     for index, garage in pairs(Garages) do
         if garage.showBlip then
             local Garage = AddBlipForCoord(garage.takeVehicle.x, garage.takeVehicle.y, garage.takeVehicle.z)
-            SetBlipSprite (Garage, garage.blipNumber)
+            SetBlipSprite(Garage, garage.blipNumber)
             SetBlipDisplay(Garage, 4)
-            SetBlipScale  (Garage, 0.60)
+            SetBlipScale(Garage, 0.60)
             SetBlipAsShortRange(Garage, true)
             SetBlipColour(Garage, 3)
             BeginTextCommandSetBlipName("STRING")
