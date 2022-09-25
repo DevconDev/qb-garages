@@ -14,6 +14,17 @@ Garages = {
         type = 'public',                --public, job, gang, depot
         vehicle = 'car'                 --car, air, sea
     },
+    ["richmangarage"] = {
+        label = "Richman Parking",
+        takeVehicle = vector3(-1308.34, 279.27, 63.68),
+        spawnPoint = vector4(-1313.55, 282.22, 63.64, 173.44),
+        putVehicle = vector3(-1304.25, 276.77, 63.72),
+        showBlip = true,
+        blipName = "Richman Parking",
+        blipNumber = 357,
+        type = 'public',                --public, job, gang, depot
+        vehicle = 'car'                 --car, air, sea
+    },
     ["sapcounsel"] = {
         label = "San Andreas Parking",
         takeVehicle = vector3(-330.01, -780.33, 33.96),
@@ -177,6 +188,7 @@ Garages = {
         type = 'depot',                --public, job, gang, depot
         vehicle = 'car'                 --car, air, sea
     },
+    --GANGS
     ["ballas"] = {
         label = "Ballas",
         takeVehicle = vector3(98.50, -1954.49, 20.84),
@@ -225,6 +237,7 @@ Garages = {
         vehicle = 'car',              --car, air, sea
         job = "cartel"
     },
+    --JOBS
     ["police"] = {
         label = "Police",
         takeVehicle = vector3(454.6, -1017.4, 28.4),
@@ -237,6 +250,31 @@ Garages = {
         vehicle = 'car',              --car, air, sea
         job = "police"
     },
+     ["realestate"] = {
+        label = "Real Estate",
+        takeVehicle = vector3(-714.58, 274.18, 84.56),
+        spawnPoint = vector4(-709.7, 275.6, 84.13, 294.02),
+        putVehicle = vector3(-709.7, 275.6, 84.13),
+        showBlip = false,
+        blipName = "Real Estate",
+        blipNumber = 357,
+        type = 'job',                --public, job, gang, depot
+        vehicle = 'car',              --car, air, sea
+        job = "realestate"
+    },
+    ["mechaniclsc"] = {
+        label = "Mechanic LSC",
+        takeVehicle = vector3(-382.88, -137.7, 38.69),
+        spawnPoint = vector4(-380.3, -140.2, 38.11, 300.22),
+        putVehicle = vector3(-384.32, -134.45, 38.69),
+        showBlip = false,
+        blipName = "Mechanic LSC",
+        blipNumber = 357,
+        type = 'job',                --public, job, gang, depot
+        vehicle = 'car',              --car, air, sea
+        job = "mechanic"
+    },
+    --AIR
     ["intairport"] = {
         label = "Airport Hangar",
         takeVehicle = vector3(-1025.92, -3017.86, 13.95),
