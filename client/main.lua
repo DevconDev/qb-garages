@@ -12,6 +12,7 @@ local currentGarageIndex = nil
 local garageZones = {}
 local lasthouse = nil
 local blipsZonesLoaded = false
+local Garage = {}
 
 
 --Menus
@@ -393,20 +394,19 @@ local function CreateBlipsZones()
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerGang = PlayerData.gang
     PlayerJob = PlayerData.job
-    local function blipZoneGen(setloc)
-        local Garage = AddBlipForCoord(setloc.takeVehicle.x, setloc.takeVehicle.y, setloc.takeVehicle.z)
-        SetBlipSprite(Garage, setloc.blipNumber)
-        SetBlipDisplay(Garage, 4)
-        SetBlipScale(Garage, 0.60)
-        SetBlipAsShortRange(Garage, true)
-        SetBlipColour(Garage, setloc.blipColor)
-        BeginTextCommandSetBlipName("STRING")
-        AddTextComponentSubstringPlayerName(setloc.blipName)
-        EndTextCommandSetBlipName(Garage)
-    end
-    for index, garage in pairs(Config.Garages) do
+    for index, garage in pairs(Garages) do
         if garage.showBlip then
-            blipZoneGen(garage);
+            if not garage.job or garage.job == PlayerJob.name or garage.job == PlayerGang.name then
+                Garage[index] = AddBlipForCoord(garage.takeVehicle.x, garage.takeVehicle.y, garage.takeVehicle.z)
+                SetBlipSprite(Garage[index], garage.blipNumber)
+                SetBlipDisplay(Garage[index], 4)
+                SetBlipScale(Garage[index], 0.60)
+                SetBlipAsShortRange(Garage[index], true)
+                SetBlipColour(Garage[index], 3)
+                BeginTextCommandSetBlipName("STRING")
+                AddTextComponentSubstringPlayerName(garage.blipName)
+                EndTextCommandSetBlipName(Garage[index])
+            end
         end
         if garage.type == "job" then
             if PlayerJob.name == garage.job or PlayerJob.type == garage.jobType then
@@ -421,6 +421,52 @@ local function CreateBlipsZones()
         end
     end
     blipsZonesLoaded = true
+end
+
+local function UpdateBlips(types)
+
+    PlayerData = QBCore.Functions.GetPlayerData()
+    PlayerGang = PlayerData.gang
+    PlayerJob = PlayerData.job
+    for index, garage in pairs(Garages) do
+        if garage.showBlip then
+            if types == 'job' and garage.type == "job" and garage.job ~= PlayerJob.name and Garage[index] then
+                RemoveBlip(Garage[index])
+            elseif types == 'gang' and garage.type == "gang" and garage.job ~= PlayerGang.name and Garage[index] then
+                RemoveBlip(Garage[index])
+            end
+            if types == 'job' and garage.type == "job" and garage.job == PlayerJob.name and not Garage[index] then
+                Garage[index] = AddBlipForCoord(garage.takeVehicle.x, garage.takeVehicle.y, garage.takeVehicle.z)
+                SetBlipSprite(Garage[index], garage.blipNumber)
+                SetBlipDisplay(Garage[index], 4)
+                SetBlipScale(Garage[index], 0.60)
+                SetBlipAsShortRange(Garage[index], true)
+                SetBlipColour(Garage[index], 3)
+                BeginTextCommandSetBlipName("STRING")
+                AddTextComponentSubstringPlayerName(garage.blipName)
+                EndTextCommandSetBlipName(Garage[index])
+            elseif types == 'gang' and garage.type == "gang" and garage.job ~= PlayerGang.name and not Garage[index] then
+                Garage[index] = AddBlipForCoord(garage.takeVehicle.x, garage.takeVehicle.y, garage.takeVehicle.z)
+                SetBlipSprite(Garage[index], garage.blipNumber)
+                SetBlipDisplay(Garage[index], 4)
+                SetBlipScale(Garage[index], 0.60)
+                SetBlipAsShortRange(Garage[index], true)
+                SetBlipColour(Garage[index], 3)
+                BeginTextCommandSetBlipName("STRING")
+                AddTextComponentSubstringPlayerName(garage.blipName)
+                EndTextCommandSetBlipName(Garage[index])
+                if garage.type == "gang" then
+                    if PlayerGang.name == garage.job then
+                        CreateZone("marker", garage, index)
+                    end
+                elseif garage.type == "job" then
+                    if PlayerJob.name == garage.job then
+                        CreateZone("marker", garage, index)
+                    end
+                end
+            end
+        end
+    end
 end
 
 RegisterNetEvent('qb-garages:client:setHouseGarage', function(house, hasKey)
@@ -456,10 +502,12 @@ end)
 
 RegisterNetEvent('QBCore:Client:OnGangUpdate', function(gang)
     PlayerGang = gang
+    UpdateBlips('gang')
 end)
 
 RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
     PlayerJob = job
+    UpdateBlips('job')
 end)
 
 RegisterNetEvent('qb-garages:client:TakeOutDepot', function(data)
